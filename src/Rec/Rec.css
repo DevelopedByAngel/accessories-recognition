@@ -1,0 +1,29 @@
+.bounding-box
+{
+	
+    position: absolute;
+    box-shadow: 0 0 0 3px #149df2 inset;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: center;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+.bounding-box p
+{
+	position:relative;
+	top:-2em;
+	font-size:0.8em;
+		border-color:transparent;
+
+	border-top-color:#149df2;
+	border-width:1em;
+	border-style:solid;
+}
+.bounding-box p span
+{
+	position:relative;
+	top:-1em;
+}
