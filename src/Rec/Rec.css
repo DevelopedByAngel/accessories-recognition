@@ -27,3 +27,9 @@
 	position:relative;
 	top:-1em;
 }
+#img
+{
+	box-shadow:0px 0px 20px white;
+	border:1px solid #4e7390;
+	border-radius:10px
+}

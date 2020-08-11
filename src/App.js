@@ -120,6 +120,7 @@ const particlesparams={
   },
   "retina_detect": true
 }
+
 class  App extends Component {
   constructor() 
   {
@@ -129,7 +130,14 @@ class  App extends Component {
       ImgURL:'',
       box:{},
       route:'signin',
-      isSignedIn:false
+      isSignedIn:false,
+      user:{
+        id:'',
+        name:'',
+        email:'',
+        entries:0,
+        joined:''
+      }
     }
   }
   FaceLocation=(response)=>
@@ -150,6 +158,12 @@ class  App extends Component {
     });
       return boxes;
          
+  }
+  updateUser=(user)=>
+  {
+    console.log(user.id,user.name,user.email,user.entries,user.joined)
+    this.setState({user:{id:user.id,name:user.name,email:user.email,entries:user.entries,joined:user.joined}})
+
   }
   calculateFaceLocation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -197,7 +211,7 @@ class  App extends Component {
         {this.state.route==='signin'
         ?<Signin onRouteChange={this.onRouteChange}/>
         :this.state.route==='register'
-        ?<Register onRouteChange={this.onRouteChange}/>
+        ?<Register onRouteChange={this.onRouteChange} updateUser={this.updateUser}/>
         :<div className=''>
         <Logo/>
         <Rank/>
