@@ -32,7 +32,8 @@ class Signin extends Component
 		.then(res=>res.json())
 		.then(res=>
 			{
-				if(res==="success"){
+				if(res.id){
+					this.props.updateUser(res)
 					this.props.onRouteChange('home');
 			}
 			})

@@ -120,7 +120,20 @@ const particlesparams={
   },
   "retina_detect": true
 }
-
+const intial={
+      input:'',
+      ImgURL:'',
+      box:{},
+      route:'signin',
+      isSignedIn:false,
+      user:{
+        id:'',
+        name:'',
+        email:'',
+        entries:0,
+        joined:''
+      }
+    }
 class  App extends Component {
   constructor() 
   {
@@ -145,23 +158,24 @@ class  App extends Component {
     const boxes=response.outputs[0].data.regions.map(region=>
       {
       const data=region.region_info.bounding_box;
-    const image=document.getElementById('img');
-     const width=Number(image.width);
-    const height=Number(image.height);
-    return{
-      top_row:data.top_row*height,
-      right_col:width-data.right_col*width,
-      bottom_row:height-data.bottom_row*height,
-      left_col:data.left_col*width,
-      name:region.data.concepts[0].name
-      }
-    });
+      const image=document.getElementById('img');
+      const width=Number(image.width);
+      const height=Number(image.height);
+      return{
+        top_row:data.top_row*height,
+        right_col:width-data.right_col*width,
+        bottom_row:height-data.bottom_row*height,
+        left_col:data.left_col*width,
+        name:region.data.concepts[0].name
+        }
+      });
       return boxes;
          
   }
   updateUser=(user)=>
   {
     console.log(user.id,user.name,user.email,user.entries,user.joined)
+    console.log('submitted app')
     this.setState({user:{id:user.id,name:user.name,email:user.email,entries:user.entries,joined:user.joined}})
 
   }
@@ -185,19 +199,44 @@ class  App extends Component {
     this.setState({input:event.target.value})  
   }
   
-  onSubmit=() => {
-    
+  onSubmit=(e) => {
+    e.preventDefault()
+    console.log('IN')
     this.setState({ImgURL:this.state.input})
+    console.log("url",this.state)
     // model no in wesite https://www.clarifai.com/model-gallery
-   app.models.predict("72c523807f93e18b431676fb9a58e6ad", this.state.input)
-   .then(response=> this.drawbox(this.FaceLocation(response)))
+    app.models.predict("72c523807f93e18b431676fb9a58e6ad", this.state.input)
+   .then(response=> {
+    console.log(response)
+    if(response)
+    {
+      console.log(this.state.user.id)
+      fetch('http://localhost:5000/image',
+      {
+      method: "put",
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+      id:this.state.user.id   
+         })
+      })
+      .then(response=>response.json())
+      .then(count=>
+      {
+        this.setState({user:{id:this.state.user.id,name:this.state.user.name,email:this.state.user.email,entries:count,joined:this.state.user.joined}})
+        // only entries changed an also use this.setState(Object.assign(user, {entries:count}))
+      })
+      .catch(err=>console.log(err))
+    }
+    this.drawbox(this.FaceLocation(response))})
    .catch(err=>console.log(err))
-  
     }
   onRouteChange=(route)=>
   {
     if(route=='signin')
-      this.setState({isSignedIn:false})
+    {
+      this.setState(intial)//clearing all user details to start state
+      this.signin();
+    }
     else if(route=='home')
       this.setState({isSignedIn:true})
     this.setState({route:route})
@@ -209,12 +248,12 @@ class  App extends Component {
         <Particles className='particles' params={particlesparams} />
         <Nav onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn}/>
         {this.state.route==='signin'
-        ?<Signin onRouteChange={this.onRouteChange}/>
+        ?<Signin onRouteChange={this.onRouteChange} updateUser={this.updateUser}/>
         :this.state.route==='register'
         ?<Register onRouteChange={this.onRouteChange} updateUser={this.updateUser}/>
         :<div className=''>
         <Logo/>
-        <Rank/>
+        <Rank entries={this.state.user.entries} name={this.state.user.name}/>
         <Form onInput={this.onInput} onSubmit={this.onSubmit}/>
         <br/>
         <Rec src={this.state.ImgURL} box={this.state.box}/>

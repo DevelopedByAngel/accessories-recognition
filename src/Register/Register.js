@@ -28,21 +28,20 @@ class Register extends Component
 		event.preventDefault();//to prevent post this port
 		fetch("http://localhost:5000/register",{
 			method: "POST",
-			headers:{'Content-Type':'application/json'},
-			body:JSON.stringify({
-				email:this.state.siginemail,
-				password:this.state.signinpassword,
-				name:this.state.name
-			})
-		})
-		.then(res=>res.json())
-		.then(user=>
-			{
-				if(user){
-					this.props.updateUser(user)
-					this.props.onRouteChange('home');
+			headers: {'Content-Type': 'application/json'},
+    	  	body: JSON.stringify({
+	        email: this.state.email,
+	        password: this.state.password,
+	        name: this.state.name
+	      })
+	    })
+      .then(response => response.json())
+      .then(user => {
+          if (user.id) {
+			this.props.updateUser(user)
+			this.props.onRouteChange('home');
 			}
-			})
+		})
 	}
 	render()
 	{
