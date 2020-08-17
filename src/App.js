@@ -201,13 +201,20 @@ class  App extends Component {
 
   onSubmit=(e) => {
     e.preventDefault()
-    console.log('IN')
+    // fetch('http://localhost:5000/imageURL',
+    //   {
+    //   method: "post",
+    //   headers:{'Content-Type':'application/json'},
+    //   body:JSON.stringify({
+    //   input:this.state.input
+    //      })
+    //   })
+    //   .then(response=>console.log(response))
+      // .then(count=>console.log(count))
     this.setState({ImgURL:this.state.input})
-    console.log("url",this.state)
     // model no in wesite https://www.clarifai.com/model-gallery
     app.models.predict("72c523807f93e18b431676fb9a58e6ad", this.state.input)
    .then(response=> {
-    console.log(response)
     if(response)
     {
       console.log(this.state.user.id)
