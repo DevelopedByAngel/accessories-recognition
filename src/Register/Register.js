@@ -53,15 +53,15 @@ class Register extends Component
 			      <legend className="f1 fw6 ph0 mh0" style={{'color':'black'}}>Register</legend>
 			      <div className="mt3">
 			        <label className="db fw6 lh-copy f6" htmlFor="email-address">Name</label>
-			        <input className="pa2 input-reset ba bg-transparent  hover-white w-100 hover-bg" type="text" name="name"  id="name" onChange={(e)=>this.onNameChange(e)}/>
+			        <input className="pa2 input-reset ba bg-transparent  hover-white w-100 hover-bg" type="text" name="name" required id="name" onChange={(e)=>this.onNameChange(e)}/>
 			      </div>
 			      <div className="mt3">
 			        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-			        <input className="pa2 input-reset ba bg-transparent  hover-white w-100 hover-bg" type="email" name="email-address"  id="email-address" onChange={(e)=>this.onEmailChange(e)}/>
+			        <input className="pa2 input-reset ba bg-transparent  hover-white w-100 hover-bg" type="email" name="email-address" required  id="email-address" onChange={(e)=>this.onEmailChange(e)}/>
 			      </div>
 			      <div className="mv3">
 			        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-			        <input className="b pa2 input-reset ba bg-transparent  hover-white w-100 hover-bg" type="password" name="password"  id="password" onChange={(e)=>this.onPasswordChange(e)}/>
+			        <input className="b pa2 input-reset ba bg-transparent  hover-white w-100 hover-bg" type="password" name="password" required id="password" onChange={(e)=>this.onPasswordChange(e)}/>
 			      </div>
 			    </fieldset>
 			    <div className="">
