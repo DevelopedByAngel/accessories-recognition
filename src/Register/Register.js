@@ -26,7 +26,7 @@ class Register extends Component
 	onSubmitRegister=(event)=>
 	{
 		event.preventDefault();//to prevent post this port
-		fetch("http://localhost:5000/register",{
+		fetch("https://shrouded-sea-67190.herokuapp.com/register",{
 			method: "POST",
 			headers: {'Content-Type': 'application/json'},
     	  	body: JSON.stringify({

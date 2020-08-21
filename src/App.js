@@ -201,7 +201,7 @@ class  App extends Component {
 
   onSubmit=(e) => {
     e.preventDefault()
-    // fetch('http://localhost:5000/imageURL',
+    // fetch('https://shrouded-sea-67190.herokuapp.com/imageURL',
     //   {
     //   method: "post",
     //   headers:{'Content-Type':'application/json'},
@@ -218,7 +218,7 @@ class  App extends Component {
     if(response)
     {
       console.log(this.state.user.id)
-      fetch('http://localhost:5000/image',
+      fetch('https://shrouded-sea-67190.herokuapp.com/image',
       {
       method: "put",
       headers:{'Content-Type':'application/json'},
